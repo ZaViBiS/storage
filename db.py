@@ -52,6 +52,6 @@ class DataBase:
         with self.Session() as session:
             return (
                 session.query(SensorsData)
-                .filter(SensorsData.time + 946684800 > now - (24 * 60 * 60))
+                .filter(SensorsData.time > now - (24 * 60 * 60))
                 .all()
             )
