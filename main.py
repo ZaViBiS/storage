@@ -1,4 +1,5 @@
 import fastapi
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from db import DataBase
@@ -13,6 +14,15 @@ class Data(BaseModel):
 
 
 app = fastapi.FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://zavibis.github.io"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 db = DataBase()
 
 
