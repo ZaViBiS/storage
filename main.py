@@ -31,6 +31,11 @@ def get_data(data: Data):
     db.put(data.time, data.fan_speed, data.hum, data.temp, data.vpd)
 
 
+@app.get("/all")
+def get_all():
+    return db.get_all()
+
+
 @app.get("/")
 def give():
     return db.get_for_last_24h()
