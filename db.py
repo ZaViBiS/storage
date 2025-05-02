@@ -35,10 +35,7 @@ class DataBase:
     def put(
         self, time: int, fan_speed: int, hum: float, temp: float, vpd: float
     ) -> None:
-        # TODO: видалити 946684800 після оновлення esp
-        data = SensorsData(
-            time=time + 946684800, fan_speed=fan_speed, hum=hum, temp=temp, vpd=vpd
-        )
+        data = SensorsData(time=time, fan_speed=fan_speed, hum=hum, temp=temp, vpd=vpd)
         with self.Session.begin() as session:
             session.add(data)
 
