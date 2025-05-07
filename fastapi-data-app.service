@@ -1,0 +1,13 @@
+[Unit]
+Description=FastAPI app
+After=network.target
+
+[Service]
+User=pasta
+Group=pasta
+WorkingDirectory=/home/pasta/storage/
+Environment="PATH=/home/pasta/storage/venv/bin"
+ExecStart=/home/pasta/storage/venv/bin/uvicorn main:app --host '::' --port 8000
+
+[Install]
+WantedBy=multi-user.target
