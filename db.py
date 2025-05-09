@@ -52,3 +52,29 @@ class DataBase:
                 .filter(SensorsData.time > now - (24 * 60 * 60))
                 .all()
             )
+
+    def get_for(self, for_time: int | float, time_gap: int):
+        """for_time - проміжок часу в unix за який треба дані
+        time_gap - проміжок між даними в хвилинах"""
+        now = datetime.datetime.now().timestamp()
+
+        with self.Session() as session:
+            data = (
+                session.query(SensorsData)
+                .filter(SensorsData.time > now - for_time)
+                .all()
+            )
+
+        res = []
+        for x in range(0, len(data) - time_gap + 1, time_gap):
+            group = data[x : x + time_gap]
+            res.append(
+                {
+                    "time": round(sum([x.time for x in group]) / time_gap, 2),
+                    "temp": round(sum([x.temp for x in group]) / time_gap, 2),
+                    "hum": round(sum([x.hum for x in group]) / time_gap, 2),
+                    "fan_speed": round(sum([x.fan_speed for x in group]) / time_gap, 2),
+                    "vpd": round(sum([x.vpd for x in group]) / time_gap, 2),
+                }
+            )
+        return res
