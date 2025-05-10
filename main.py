@@ -55,3 +55,8 @@ def give_week():
 @app.get("/month")
 def give_month():
     return db.get_for(datetime.timedelta(days=30).total_seconds(), 60)
+
+
+@app.get("/last")
+def give_last():
+    return db.get_last()

@@ -39,6 +39,10 @@ class DataBase:
         with self.Session.begin() as session:
             session.add(data)
 
+    def get_last(self):
+        with self.Session() as session:
+            return session.query(SensorsData).order_by(SensorsData.id.desc()).first()
+
     def get_all(self):
         with self.Session() as session:
             for data in session.query(SensorsData).all():
