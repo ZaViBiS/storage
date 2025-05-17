@@ -38,17 +38,6 @@ func main() {
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("hello, world")
 	})
-	// app.Get("/hour", func(c fiber.Ctx) error {
-	// 	data, err := db.GetFor(database, time.Now().Unix()-60*60, 1)
-	// 	if err != nil {
-	// 		log.Fatal("error in getting from database", err)
-	// 	}
-	// 	jsonData, err := json.Marshal(&data)
-	// 	if err != nil {
-	// 		log.Fatal("error in json encoding ", err)
-	// 	}
-	// 	return c.SendString(string(jsonData))
-	// })
 
 	app.Get("/hour", getForDurationHandler(60*60, 1, database))
 	app.Get("/day", getForDurationHandler(60*60*24, 5, database))
