@@ -7,6 +7,7 @@ import (
 
 	"github.com/ZaViBiS/grow/db"
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/cors"
 	"gorm.io/gorm"
 )
 
@@ -34,9 +35,22 @@ func main() {
 	}
 
 	app := fiber.New()
+	app.Use(cors.New())
 
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("hello, world")
+	})
+
+	app.Get("/last", func(c fiber.Ctx) error {
+		data, err := db.GetLast(database)
+		if err != nil {
+			log.Fatal("error", err)
+		}
+		jsonData, err := json.Marshal(data)
+		if err != nil {
+			log.Fatal("err", err)
+		}
+		return c.JSON(jsonData)
 	})
 
 	app.Get("/hour", getForDurationHandler(60*60, 1, database))
