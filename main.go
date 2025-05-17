@@ -50,7 +50,7 @@ func main() {
 		if err != nil {
 			log.Fatal("err", err)
 		}
-		return c.JSON(jsonData)
+		return c.Send(jsonData)
 	})
 
 	app.Get("/hour", getForDurationHandler(60*60, 1, database))
@@ -58,6 +58,7 @@ func main() {
 	app.Get("/week", getForDurationHandler(60*60*24*7, 10, database))
 	app.Get("/month", getForDurationHandler(60*60*24*30, 30, database))
 	app.Get("/year", getForDurationHandler(60*60*24*365, 60, database))
+	app.Get("/all", getForDurationHandler(time.Now().Unix(), 1, database))
 
 	app.Post("/put", func(c fiber.Ctx) error {
 		var data db.Data
