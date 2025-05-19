@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"os/exec"
 	"time"
 
 	"github.com/ZaViBiS/grow/db"
@@ -69,6 +70,15 @@ func main() {
 			return fiber.NewError(fiber.StatusInternalServerError, "Failed to insert")
 		}
 		return c.JSON(fiber.Map{"status": "ok"})
+	})
+
+	app.Get("/reboot", func(c fiber.Ctx) error {
+		cmd := exec.Command("/usr/bin/sudo /usr/sbin/reboot")
+		if err := cmd.Run(); err != nil {
+			log.Fatal("reboot command error", err)
+			return c.SendString("error")
+		}
+		return c.SendString("rebooting")
 	})
 
 	log.Fatal(app.Listen("[::]:8000", fiber.ListenConfig{
