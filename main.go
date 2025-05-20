@@ -73,7 +73,7 @@ func main() {
 	})
 
 	app.Get("/reboot", func(c fiber.Ctx) error {
-		cmd := exec.Command("/usr/bin/sudo /usr/sbin/reboot")
+		cmd := exec.Command("/usr/bin/sudo", "/usr/sbin/reboot")
 		if err := cmd.Run(); err != nil {
 			log.Fatal("reboot command error", err)
 			return c.SendString("error")
