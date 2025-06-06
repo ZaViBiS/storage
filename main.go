@@ -81,6 +81,15 @@ func main() {
 		return c.SendString("rebooting")
 	})
 
+	app.Get("/sshreboot", func(c fiber.Ctx) error {
+		cmd := exec.Command("/usr/bin/sudo", "/usr/bin/systemctl", "restart", "sshd.service")
+		if err := cmd.Run(); err != nil {
+			log.Fatal("reboot command error", err)
+			return c.SendString("error")
+		}
+		return c.SendString("rebooting")
+	})
+
 	log.Fatal(app.Listen("[::]:8000", fiber.ListenConfig{
 		ListenerNetwork: "tcp6",
 	}))
