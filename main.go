@@ -34,7 +34,7 @@ func main() {
 		panic(err)
 	}
 
-	app := fiber.New()
+	app := fiber.New(fiber.Config{Concurrency: 3})
 	app.Use(cors.New())
 
 	app.Get("/", func(c fiber.Ctx) error {
