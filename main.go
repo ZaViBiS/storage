@@ -5,7 +5,7 @@ import (
 	"log"
 	"os/exec"
 
-	"github.com/ZaViBiS/grow/db"
+	"github.com/ZaViBiS/storage/db"
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"gorm.io/gorm"

@@ -1,4 +1,4 @@
-module github.com/ZaViBiS/grow
+module github.com/ZaViBiS/storage
 
 go 1.24.3
 
