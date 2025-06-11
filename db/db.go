@@ -63,14 +63,19 @@ func GetLast(db *gorm.DB) (json.RawMessage, error) {
 }
 
 func GetFor(db *gorm.DB, forTimeSec int64, timeGapMin int) ([]Data, error) {
-	now := float64(time.Now().Unix())
-	startTime := now - float64(forTimeSec)
+	now := time.Now().Unix()
+	startTime := now - forTimeSec
+	println(startTime)
 
 	var data []Data
 	err := db.Where("time > ?", startTime).Order("time").Find(&data).Error
 	if err != nil {
 		return nil, err
 	}
+
+	// if timeGapMin == 1 {
+	// 	return data, nil
+	// }
 
 	grouped := map[int64][]Data{}
 	gapSec := int64(timeGapMin * 60)

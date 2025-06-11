@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"log"
 	"os/exec"
-	"time"
 
 	"github.com/ZaViBiS/grow/db"
 	"github.com/gofiber/fiber/v3"
@@ -14,7 +13,7 @@ import (
 
 func getForDurationHandler(durationSeconds int64, timeGap int, database *gorm.DB) fiber.Handler {
 	return func(c fiber.Ctx) error {
-		data, err := db.GetFor(database, time.Now().Unix()-durationSeconds, timeGap)
+		data, err := db.GetFor(database, durationSeconds, timeGap)
 		if err != nil {
 			return c.Status(500).SendString("db error")
 		}
