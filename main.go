@@ -35,7 +35,10 @@ func main() {
 	}
 
 	app := fiber.New(fiber.Config{Concurrency: 3})
-	app.Use(cors.New())
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"https://zavibis.github.io"},
+		AllowCredentials: true,
+	}))
 
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString("hello, world")
